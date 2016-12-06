@@ -3,12 +3,14 @@ import static org.junit.Assert.assertEquals;
 
 public class ChickenCoopTest {
   ChickenCoop coop;
-  Chicken chicken;
+  LayingHen hen;
+  ChickenMeat chickenMeat;
 
   @Before
   public void before() {
   coop = new ChickenCoop();
-  chicken = new Chicken();
+  hen = new LayingHen();
+  chickenMeat = new ChickenMeat();
   }
 
   @Test
@@ -18,29 +20,31 @@ public class ChickenCoopTest {
 
   @Test
   public void coopAcceptsChicken() {
-    coop.addChicken(chicken);
-    assertEquals(1, coop.chickenCount());
+    coop.addChicken(chickenMeat);
+    coop.addChicken(hen);
+    assertEquals(2, coop.chickenCount());
   }
 
   @Test
-  public void coopCannotAcceptChicken() {
-    for (int i=0; i < 20; i++) {coop.addChicken(chicken);}
-    assertEquals(10, coop.chickenCount());
-  }
-
-  @Test
-  public void coopIsFull() {
-    for (int i = 0; i < 10; i++) {
-      coop.addChicken(chicken);
-    }
-    assertEquals(true, coop.coopFull());
-  }
-
-  @Test
-  public void spacesInCoop() {
-    coop.addChicken(chicken);
-    assertEquals(1, coop.chickenCount());
-    coop.chickenMeat();
+  public void coopEmptyAfterFox() {
+    coop.addChicken(chickenMeat);
+    coop.addChicken(hen);
+    coop.foxGetsIn();
     assertEquals(0, coop.chickenCount());
+  }
+
+  @Test
+  public void foxGetsChicken() {
+    coop.addChicken(hen);
+    Chicken chicken = coop.foxGetsChicken();
+    LayingHen food = (LayingHen)chicken;
+    assertEquals("clucking", food.cluck());
+  }
+
+  @Test
+  public void chickenCanCluck() {
+    coop.addChicken(chickenMeat);
+    Chicken chicken = coop.foxGetsChicken();
+    assertEquals("cluck", chicken.cluck());
   }
 }

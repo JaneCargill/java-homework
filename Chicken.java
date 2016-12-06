@@ -1,3 +1,3 @@
-class Chicken{
-  
+public interface Chicken {
+  String cluck();
 }

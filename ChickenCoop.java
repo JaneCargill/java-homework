@@ -1,38 +1,30 @@
+import java.util.*;
+
 class ChickenCoop{
   private int size;
-  private Chicken[] coop;
+  private ArrayList<Chicken> coop;
 
   public ChickenCoop() {
-    this.coop = new Chicken[10];
+    this.coop = new ArrayList<Chicken>();
   }
 
-
   public int chickenCount() {
-    int count = 0;
-    for (Chicken chicken : coop) {
-      if (chicken != null) {
-        count ++;
-      }
-    }
-    return count;
+    return coop.size();
   }
 
   public void addChicken(Chicken chicken) {
-    if (coopFull()) {
-      return;
-    }
-    int chickenCount = chickenCount();
-    coop[chickenCount] = chicken;
+    coop.add(chicken);
   }
 
-  public boolean coopFull() {
-    return chickenCount() == coop.length;
+  public void foxGetsIn() {
+    coop.clear();
   }
 
-  public void chickenMeat() {
-    for (int i = 0; i < coop.length; i++) {
-      coop[i] = null;
+  public Chicken foxGetsChicken() {
+    if (chickenCount() > 0) {
+      return coop.remove(0);
     }
+    return null;
   }
 
 }
